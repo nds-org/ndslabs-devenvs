@@ -1,8 +1,8 @@
-//C hello world example
+// C "Hello World" example
 #include <stdio.h>
  
 int main()
 {
-  printf("Hello world\n");
+  printf("Hello, World! (C)\n");
   return 0;
 }

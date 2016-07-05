@@ -5,6 +5,7 @@ RUN apt-get install -y \
 	build-essential \
 	curl \
 	git \
+	lsof \
 	nodejs \
 	python \
 	vim
