@@ -1,0 +1,244 @@
+<!doctype html>
+<html ng-app="alertTest">
+  <head>
+    <title>ngAlert Demo Page</title>
+    <script src="//code.jquery.com/jquery-1.11.3.js"></script>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js"></script>
+    <script src="angular-alert.js"></script>
+    <script>
+      // Enable Bootstrap tabs to display code snippets
+      var ids = [ '#exampleHtml', '#exampleJs', '#bindableHtml', '#bindableJs', '#complexHtml', '#complexJs' ];
+      angular.forEach(ids, function(id) {
+        $(id + ' a').click(function (e) {
+          e.preventDefault()
+          $(this).tab('show')
+        })
+      });
+        
+      angular
+      .module('alertTest', [ 'ngAlert' ])
+      .controller('AlertController', [ '$scope', 'AlertService', function($scope, AlertService) {
+        $scope.customMessage = 'Hello, World!';
+        
+        $scope.service1 = new AlertService();
+        $scope.service2 = new AlertService();
+        $scope.service3 = new AlertService(0, 0);
+        
+        $scope.addTextAlert = function(service) {
+          var msg = $scope.customMessage;
+          service.enqueue(msg);
+        };
+        
+        $scope.addCustomObjectAlert = function(service) {
+          var msg = $scope.customMessage;
+          service.enqueue({ 
+            message: msg, 
+            anotherField: 'Another ' + msg
+          });
+        };
+        
+        $scope.surround = function(s) {
+         return "{" + s + "}";
+       }
+      }]);
+    </script>
+    <style>
+      .alert {
+        margin:10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div ng-view ng-controller="AlertController">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-12">
+            <h1>ngAlert Demo Page</h1>
+            <hr/>
+            <h3>Simple AngularJS queue service with variable capacity and TTL / timeout</h3>
+            <div class="well">
+              <label>Example Alert Message:</label> <input class="form-control" type="text" ng-model="customMessage"/></p>
+            </div>
+          </div>
+        </div>
+        <div class="row" id="example">
+          <div class="col-md-8">
+            <div class="well">
+              <h2>Example</h2>
+              <!-- Example Code tabs -->
+              <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active"><a href="#exampleHtml" aria-controls="home" role="tab" data-toggle="tab">HTML</a></li>
+                <li role="presentation"><a href="#exampleJs" aria-controls="profile" role="tab" data-toggle="tab">JavaScript</a></li>
+              </ul>
+              
+               <!-- Tab panes -->
+              <div class="tab-content">
+                <!-- Example HTML -->
+                <div role="tabpanel" class="tab-pane active" id="exampleHtml">
+                  <pre>
+&lt;button class="btn btn-success" ng-click="addAlert()"&gt;
+  Enqueue
+&lt;/button&gt;
+
+&lt;div class="alert alert-info" ng-repeat="alert in service.alerts"&gt;
+  {{ surround(surround(' alert.message ')) }}
+&lt;/div&gt;
+                  </pre>
+                </div>
+                
+                <!-- Example JS -->
+                <div role="tabpanel" class="tab-pane" id="exampleJs">
+                  <pre>
+$scope.customMessage = 'Hello, World!';
+
+$scope.service = new AlertService();
+
+$scope.addAlert = function() {
+    $scope.service.enqueue($scope.customMessage);
+};
+                  </pre>
+                </div>
+              </div>
+              <p>Using the default implementation, capacity is limited to 5 and will automatically expire after 3 seconds (3000 ms).</p>
+              <p><label>Default maximum alerts stored (#):</label> 5</p>
+              <p><label>Default time to store alerts (ms):</label> 3000</p>
+              <p><strong>NOTE:</strong> It is almost always a good idea to set maxAlerts to <i>some</i> value, even if delayTime is the default value. Otherwise, some styling may be required if your alerts strech off of the screen and are unreadable.</p>
+              <button class="btn btn-success" ng-click="addTextAlert(service1)">Enqueue</button>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="alert alert-info" ng-repeat="alert in service1.alerts">{{ alert.message }}</div>
+          </div>
+        </div>
+        <div class="row" id="bindable">
+          <div class="col-md-8">
+            <div class="well">
+              <h2>Bindable Settings</h2>
+              <p></p>
+              <!-- Bindable Example Code tabs -->
+              <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active"><a href="#bindableHtml" aria-controls="home" role="tab" data-toggle="tab">HTML</a></li>
+                <li role="presentation"><a href="#bindableJs" aria-controls="profile" role="tab" data-toggle="tab">JavaScript</a></li>
+              </ul>
+              
+               <!-- Tab panes -->
+              <div class="tab-content">
+                <!-- Bindable Example HTML -->
+                <div role="tabpanel" class="tab-pane active" id="bindableHtml">
+                  <pre>
+&lt;div class="form"&gt;
+  &lt;label&gt;Max Alerts:&lt;/label&gt;
+  &lt;input class="form-control" type="number" 
+         ng-model="service.maxAlerts"/&gt;
+         
+  &lt;label&gt;Time to Live:&lt;/label&gt;
+  &lt;input class="form-control" type="number" 
+         ng-model="service.delayTime"/&gt;
+&lt;/div&gt;
+
+&lt;button class="btn btn-success" ng-click="addAlert(service2)"&gt;
+  Enqueue
+&lt;/button&gt;
+
+&lt;div class="alert alert-info" ng-repeat="alert in service.alerts"&gt;
+  {{ surround(surround(' alert.message ')) }}
+&lt;/div&gt;
+                  </pre>
+                </div>
+                
+                <!-- Bindable Example JS -->
+                <div role="tabpanel" class="tab-pane" id="bindableJs">
+                  <pre>
+$scope.customMessage = 'Hello, World!';
+
+$scope.service = new AlertService();
+
+$scope.addAlert = function() {
+    $scope.service.enqueue($scope.customMessage);
+};
+                  </pre>
+                </div>
+              </div>
+              <p>You can bind to the internal properties of the service to change the timing / capacity settings on-the-fly! This can be helpful if you allow the user to save their default notification preferences.</p>
+              <div class="form">
+                <p><label>Max Alerts:</label> <input class="form-control" type="number" ng-model="service2.maxAlerts"/></p>
+                <p><label>Time to Live:</label> <input class="form-control" type="number" ng-model="service2.delayTime"/></p>
+              </div>
+              <button class="btn btn-success" ng-click="addCustomObjectAlert(service2)">Enqueue</button>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="alert alert-success" ng-repeat="alert in service2.alerts">{{ alert.message }}</div>
+          </div>
+        </div>
+        <div class="row" id="infinite">
+          <div class="col-md-6">
+            <div class="well">
+              <h2>Infinite and Complex</h2>
+              <p>Queues can have infinite capacity and timeout as well. Below is example code with an infinite capactiy queue with alerts that do not automatically timeout:</p>
+              <!-- Complex Example Code tabs -->
+              <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active"><a href="#complexHtml" aria-controls="home" role="tab" data-toggle="tab">HTML</a></li>
+                <li role="presentation"><a href="#complexJs" aria-controls="profile" role="tab" data-toggle="tab">JavaScript</a></li>
+              </ul>
+              
+               <!-- Tab panes -->
+              <div class="tab-content">
+                <!-- Complex Example HTML -->
+                <div role="tabpanel" class="tab-pane active" id="complexHtml">
+                  <pre>
+&lt;button class="btn btn-success" ng-click="addCustomObjectAlert()"&gt;
+  Enqueue
+&lt;/button&gt;
+
+&lt;button class="btn btn-danger" ng-click="service.dequeue()"&gt;
+  Dequeue
+&lt;/button&gt;
+
+&lt;div class="alert alert-info" 
+         ng-repeat="alert in service.alerts"&gt;
+  {{ surround(surround(' alert ')) }} 
+  &lt;button class="pull-right btn btn-xs btn-primary" 
+          ng-click="service.acknowledge($index)"&gt;&amp;times&#59;
+  &lt;/button&gt;
+&lt;/div&gt;
+                  </pre>
+                </div>
+                
+                <!-- Complex Example JS -->
+                <div role="tabpanel" class="tab-pane" id="complexJs">
+                  <pre>
+$scope.customMessage = 'Hello, World!';
+
+$scope.service = new AlertService();
+
+$scope.addCustomObjectAlert = function() {
+  var msg = $scope.customMessage;
+  $scope.service.enqueue({ 
+    message: msg, 
+    anotherField: 'Another ' + msg
+  });
+};
+                  </pre>
+                </div>
+              </div>
+              <p>Have a complex object that represents your notification? Don't sweat it! Simply feed in your object the same way. The alerts can be styled however you want and can even be given animations for when the ngRepeat binding changes!</p>
+              <p>Keep as many messages as you want... for however long you want! These messages do not necessarily have to be displayed to the user.</p>
+              <p><label>NOTE:</label> The state of this queue is not saved between page loads.</p>
+              <button class="btn btn-success" ng-click="addCustomObjectAlert(service3)">Enqueue</button>
+              <button class="btn btn-danger" ng-click="service3.dequeue()">Dequeue</button>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="alert alert-info" ng-repeat="alert in service3.alerts">
+              {{ alert }} <button class="pull-right btn btn-xs btn-primary" ng-click="service3.acknowledge($index)">&times;</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
