@@ -1,14 +1,14 @@
 FROM ubuntu:wily
 
-RUN apt-get update
-RUN apt-get install -y \
+RUN apt-get update && \
+    apt-get install -y \
 	build-essential \
 	curl \
 	git \
+	lsof \
 	nodejs \
 	python \
 	vim
-
 
 RUN git clone https://github.com/c9/core.git /cloud9
 WORKDIR /cloud9
