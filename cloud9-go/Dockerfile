@@ -31,21 +31,20 @@ RUN curl -fsSL "https://golang.org/dl/go1.6.linux-amd64.tar.gz" -o /tmp/golang.t
     && update-alternatives --install /usr/bin/godoc godoc /usr/local/go/1.6/bin/godoc 3 \
     && update-alternatives --install /usr/bin/gofmt gofmt /usr/local/go/1.6/bin/gofmt 3 
 
-
-ENV PATH /workspace/bin:$PATH
-ENV GOPATH /workspace
 ENV GOROOT /usr/local/go/1.6
 
+ENV GOPATH /gotools
+RUN go get github.com/tools/godep && \
+    go get github.com/nsf/gocode 
+
+ENV GOPATH /workspace
+ENV PATH /workspace/bin:/gotools/bin:$PATH
 
 COPY .vimrc /root/.vimrc
 
 RUN mkdir -p /root/.vim/colors && \
-    rm -r /tmp/vim-solarized && \
-    rm -r /root/.vim/bundle/Vundle.vim && \
     git clone git://github.com/altercation/vim-colors-solarized.git /tmp/vim-solarized && \
 	mv /tmp/vim-solarized/colors/solarized.vim /root/.vim/colors && \
     git clone https://github.com/VundleVim/Vundle.vim.git /root/.vim/bundle/Vundle.vim 
 
-
 RUN vim  +PluginInstall +qall 
-RUN go get github.com/tools/godep 
