@@ -1,0 +1,36 @@
+FROM centos:7
+
+# https://xpra.org/trac/wiki/Usage/Docker/CentOS
+# https://www.xpra.org/trac/wiki/Clients/HTML5
+
+RUN cd /etc/yum.repos.d && \
+    curl -O https://winswitch.org/downloads/CentOS/winswitch.repo && \
+    dbus-uuidgen >/etc/machine-id 
+
+RUN yum update -q -y && \
+    yum install -q -y epel-release && \
+    yum --enablerepo=epel install -q -y \
+    dejavu-sans-fonts \
+    git \
+    python-websockify \
+    vim \
+    wget \
+    which \
+    x11-utils \
+	xfonts-base \
+    xorg-x11-server-Xvfb \
+    xpra 
+
+
+# install PyCharm
+RUN cd / && \
+    wget -q http://download.jetbrains.com/python/pycharm-community-2016.2.tar.gz && \
+    tar xvfz pycharm-community-2016.2.tar.gz && \ 
+    rm pycharm-community-2016.2.tar.gz 
+
+
+EXPOSE 10000
+
+CMD ["xpra", "start", "--daemon=no", "--exit-with-children", "--mdns=no", "--pulseaudio=no", "--printing=no", "--webcam=no",  "--bind-tcp=0.0.0.0:10000", "--html=on", "--start-child=/pycharm-community-2016.2/bin/pycharm.sh"]
+
+
