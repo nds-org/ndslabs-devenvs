@@ -11,6 +11,7 @@ RUN yum update -q -y && \
     yum install -q -y epel-release && \
     yum --enablerepo=epel install -q -y \
     dejavu-sans-fonts \
+	dejavu-sans-mono-fonts \
     git \
     python-websockify \
     vim \
@@ -28,9 +29,8 @@ RUN cd / && \
     tar xvfz pycharm-community-2016.2.tar.gz && \ 
     rm pycharm-community-2016.2.tar.gz 
 
-
 EXPOSE 10000
 
-CMD ["xpra", "start", "--daemon=no", "--exit-with-children", "--mdns=no", "--pulseaudio=no", "--printing=no", "--webcam=no",  "--bind-tcp=0.0.0.0:10000", "--html=on", "--start-child=/pycharm-community-2016.2/bin/pycharm.sh"]
+CMD ["xpra", "start","--daemon=no", "--exit-with-children", "--mdns=no", "--pulseaudio=no", "--printing=no", "--webcam=no",  "--bind-tcp=0.0.0.0:10000", "--html=on", "--start-child=/pycharm-community-2016.2/bin/pycharm.sh"]
 
 
