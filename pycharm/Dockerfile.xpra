@@ -29,6 +29,7 @@ RUN cd / && \
     tar xvfz pycharm-community-2016.2.tar.gz && \ 
     rm pycharm-community-2016.2.tar.gz 
 
+COPY index.html /usr/share/xpra/www
 VOLUME /root
 EXPOSE 10000
 
