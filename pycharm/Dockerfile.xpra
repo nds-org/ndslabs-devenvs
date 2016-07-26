@@ -30,9 +30,10 @@ RUN cd / && \
     rm pycharm-community-2016.2.tar.gz 
 
 COPY index.html /usr/share/xpra/www
+COPY entrypoint.sh /
 VOLUME /root
 EXPOSE 10000
 
-CMD ["xpra", "start","--daemon=no", "--exit-with-children", "--mdns=no", "--pulseaudio=no", "--printing=no", "--webcam=no",  "--bind-tcp=0.0.0.0:10000", "--html=on", "--start-child=/pycharm-community-2016.2/bin/pycharm.sh"]
+CMD [ "/entrypoint.sh"]
 
 
