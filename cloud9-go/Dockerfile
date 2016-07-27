@@ -1,4 +1,4 @@
-FROM ndslabs/cloud9-base:latest
+FROM ndslabs/cloud9-base:3.0
 
 RUN apt-get install -y \
 	bison \
