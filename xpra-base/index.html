@@ -188,6 +188,11 @@
 
             $(document).ready(function() {
 
+				var secure = false;
+				if (window.location.protocol == "https:") {
+					secure = true;
+				}
+
                 // look at url parameters
                 var username = window.location.getParameter("username") || null;
                 var password = window.location.getParameter("password") || null;
@@ -259,7 +264,7 @@
                 }
 
                 // and connect
-                client.connect(server, port, false);
+                client.connect(server, port, secure);
 
                 // attach a callback for paste on the screen
                 $('#pasteboard').on('paste', function (e) {
