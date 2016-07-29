@@ -1,4 +1,4 @@
-FROM ubuntu
+FROM ubuntu:wily
 #https://koding.com/Activity/how-to-connect-a-vnc-client-to-your-koding-vm
 RUN apt-get update -y && \
 	apt-get -y install \
