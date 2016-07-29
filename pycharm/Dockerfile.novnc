@@ -1,4 +1,8 @@
-FROM ndslabs/pycharm-novnc
+FROM ndslabs/novnc-base:dev
+
+RUN apt-get update -y && \
+    apt-get install -y python-pip python-dev build-essential && \
+	pip install --upgrade pip 
 
 RUN cd / && \
    wget -q http://download.jetbrains.com/python/pycharm-community-2016.2.tar.gz && \

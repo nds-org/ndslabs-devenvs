@@ -21,6 +21,7 @@ ENV DISPLAY=:0
 
 RUN cd / && git clone git://github.com/kanaka/noVNC 
 
+ADD index.html /noVNC/
 ADD init.sh /init.sh
 RUN chmod +x /init.sh
 
