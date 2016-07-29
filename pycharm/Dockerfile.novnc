@@ -1,4 +1,4 @@
-FROM ndslabs/novnc-base:dev
+FROM ndslabs/novnc-base:1.0
 
 RUN apt-get update -y && \
     apt-get install -y python-pip python-dev build-essential && \

@@ -1,11 +1,14 @@
-FROM ndslabs/cloud9-base:latest
+FROM ndslabs/cloud9-base:3.0
 
-RUN apt-get install -y \
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
 	bison \
 	gdb \
 	gdbserver \
 	wget \
-	vim-gnome
+	vim-gnome && \
+    apt-get -y clean all && \
+    rm -rf /var/lib/apt/lists/* /tmp/*
 
 RUN curl -fsSL "https://golang.org/dl/go1.4.3.linux-amd64.tar.gz" -o /tmp/golang.tar.gz \
     && mkdir -p /usr/local/go/1.4.3  \
