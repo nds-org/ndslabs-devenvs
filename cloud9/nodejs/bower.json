@@ -1,0 +1,32 @@
+{
+  "name": "angular-alert",
+  "main": "angular-alert.js",
+  "version": "0.1.0",
+  "homepage": "https://github.com/bodom0015/angular-alert",
+  "authors": [
+    "Mike Lambert <bodom0015@gmail.com>"
+  ],
+  "description": "A simple queue service for AngularJS",
+  "moduleType": [
+    "amd"
+  ],
+  "keywords": [
+    "angular",
+    "alert",
+    "notification",
+    "queue",
+    "js",
+    "angularJS"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.4.0"
+  }
+}
