@@ -92,27 +92,29 @@
 
         <!--noVNC Buttons-->
         <div class="noVNC_buttons_right">
-            <input type="image" alt="Ctrl+Alt+Del" src="images/ctrlaltdel.png"
+            <input type="hidden" alt="Ctrl+Alt+Del" src="images/ctrlaltdel.png"
                 id="noVNC_sendCtrlAltDel_button" class="noVNC_status_button"
                 title="Send Ctrl-Alt-Del" />
-            <input type="image" alt="Shutdown/Reboot" src="images/power.png"
+            <input type="hidden" alt="Shutdown/Reboot" src="images/power.png"
                 id="noVNC_toggleXvp_button" class="noVNC_status_button"
                 title="Shutdown/Reboot..." />
+            <input type="hidden" alt="Settings" src="images/settings.png"
+                id="noVNC_settings_button" class="noVNC_status_button"
+                title="Settings" />
+            <input type="hidden" alt="Connect" src="images/connect.png"
+                id="noVNC_connectPanel_button" class="noVNC_status_button"
+                title="Connect" />
+            <input type="hidden" alt="Disconnect" src="images/disconnect.png"
+                id="noVNC_disconnect_button" class="noVNC_status_button"
+                title="Disconnect" />
+
+            <!-- Display clipboard / fullscreen buttons -->
             <input type="image" alt="Clipboard" src="images/clipboard.png"
                 id="noVNC_clipboard_button" class="noVNC_status_button"
                 title="Clipboard" />
             <input type="image" alt="Fullscreen" src="images/fullscreen.png"
                 id="noVNC_fullscreen_button" class="noVNC_status_button"
                 title="Fullscreen" />
-            <input type="image" alt="Settings" src="images/settings.png"
-                id="noVNC_settings_button" class="noVNC_status_button"
-                title="Settings" />
-            <input type="image" alt="Connect" src="images/connect.png"
-                id="noVNC_connectPanel_button" class="noVNC_status_button"
-                title="Connect" />
-            <input type="image" alt="Disconnect" src="images/disconnect.png"
-                id="noVNC_disconnect_button" class="noVNC_status_button"
-                title="Disconnect" />
         </div>
 
         <!-- Description Panel -->
@@ -194,7 +196,7 @@
         </div>
 
         <!-- Connection Panel -->
-        <div id="noVNC_controls" class="triangle-right top">
+        <div id="noVNC_controls" class="triangle-right top" style="visibility: hidden;">
             <ul>
                 <li><label><strong>Host: </strong><input id="noVNC_setting_host" /></label></li>
                 <li><label><strong>Port: </strong><input id="noVNC_setting_port" /></label></li>
@@ -208,7 +210,7 @@
 
 
     <div id="noVNC_container">
-        <h1 id="noVNC_logo"><span>no</span><br />VNC</h1>
+        <h1 id="noVNC_logo" style="visibility: hidden;"><span>no</span><br />VNC</h1>
 
         <!-- HTML5 Canvas -->
         <div id="noVNC_screen">
@@ -220,6 +222,22 @@
     </div>
     <script src="include/util.js"></script>
     <script src="include/ui.js"></script>
+	<script>
+		var doConnect = function() {
+			console.log("Connecting...");
+                        try {
+                                var btn = document.getElementById('noVNC_connect_button');
+                                btn.click();
+                                console.debug(document);
+                                console.debug(btn);
+                                console.log("Connected!");
+                        } catch (e) {
+                                console.log("Exception!");
+                                console.debug(e);
+                        }
+		};
+		setTimeout(doConnect, 200);
+        </script>
 
  </body>
 </html>
