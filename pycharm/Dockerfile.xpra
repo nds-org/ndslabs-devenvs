@@ -1,4 +1,4 @@
-FROM ndslabs/xpra-base:1.0
+FROM ndslabs/xpra-base:latest
 
 RUN yum update -q -y && \
     yum install -y python-pip 

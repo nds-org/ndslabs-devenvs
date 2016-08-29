@@ -1,4 +1,4 @@
-FROM ndslabs/cloud9-base:3.0
+FROM ndslabs/cloud9-base:latest
 
 #USER root
 #RUN useradd developer -c "NodeJS Developer"

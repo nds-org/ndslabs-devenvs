@@ -1,4 +1,4 @@
-FROM ndslabs/cloud9-base:3.0
+FROM ndslabs/cloud9-base:latest
 
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
