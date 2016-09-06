@@ -1,0 +1,12 @@
+// This file overrides the built-in Java (single-file) runner
+// For more information see http://docs.c9.io:8080/#!/api/run-method-run
+{
+  "script": [
+    "javac $file_name",
+    "java ${debug?-Xdebug} ${debug?-agentlib:jdwp=transport=dt_socket,address=8000,server=y,suspend=n} $file_base_name"
+  ],
+  "debugger": "java",
+  "debugport": "8000",
+  "info": "Building $file_name and running $file_base_name",
+  "selector": "^.*\\.(java)$"
+}
