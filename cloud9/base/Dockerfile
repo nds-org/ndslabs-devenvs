@@ -1,7 +1,7 @@
 FROM ubuntu:wily
 
-RUN apt-get update && \
-    apt-get install -y \
+RUN apt-get -qq update && \
+    apt-get -qq install --no-install-recommends \
 	build-essential \
 	curl \
         ca-certificate \
@@ -9,9 +9,11 @@ RUN apt-get update && \
 	lsof \
 	nodejs \
 	python \
-	vim
+	vim && \
+    apt-get -y clean all && \
+    rm -rf /var/lib/apt/lists/* /tmp/*
 
-RUN git clone https://github.com/c9/core.git /cloud9
+RUN git clone https://github.com/c9/core.git /cloud9 && rm -rf /cloud9/.git
 WORKDIR /cloud9
 RUN scripts/install-sdk.sh
 
