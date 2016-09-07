@@ -1,8 +1,5 @@
 FROM ndslabs/cloud9-base:latest
 
-#USER root
-#RUN useradd developer -c "NodeJS Developer"
-
 # Install NodeJS / NPM
 RUN apt-get -qq update && \
     apt-get -qq install npm && \
@@ -10,5 +7,3 @@ RUN apt-get -qq update && \
 
 # Install Bower / Grunt / Gulp
 RUN npm install -g bower grunt gulp
-
-#USER developer
