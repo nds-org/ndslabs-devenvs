@@ -4,7 +4,7 @@ RUN apt-get -qq update && \
     apt-get -qq install --no-install-recommends \
 	build-essential \
 	curl \
-        ca-certificate \
+        ca-certificates \
 	git \
 	lsof \
 	nodejs \
