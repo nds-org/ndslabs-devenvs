@@ -1,4 +1,4 @@
-FROM ndslabs/cloud9-base
+FROM ndslabs/cloud9-base:latest
 
 ARG version=7
 
