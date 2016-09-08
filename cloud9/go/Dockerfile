@@ -15,7 +15,10 @@ RUN apt-get update && \
 RUN curl -fsSL "https://golang.org/dl/go${version}.linux-amd64.tar.gz" -o /tmp/golang.tar.gz && \
     mkdir -p /usr/local/go/${version} && \
     tar -C /usr/local/go/${version} --strip-components=1 -xzf /tmp/golang.tar.gz && \
-    rm /tmp/golang.tar.gz
+    rm /tmp/golang.tar.gz && \
+    update-alternatives --install /usr/bin/go go /usr/local/go/${version}/bin/go 1 && \
+    update-alternatives --install /usr/bin/godoc godoc /usr/local/go/${version}/bin/godoc 1 && \
+    update-alternatives --install /usr/bin/gofmt gofmt /usr/local/go/${version}/bin/gofmt 1 
 
 ENV GOROOT /usr/local/go/${version}
 
