@@ -13,7 +13,7 @@ RUN apt-get -qq update && \
     apt-get -y clean all && \
     rm -rf /var/lib/apt/lists/* /tmp/*
 
-RUN git clone https://github.com/c9/core.git /cloud9 && rm -rf /cloud9/.git
+RUN git clone --depth 1 --single-branch https://github.com/c9/core.git /cloud9
 WORKDIR /cloud9
 RUN scripts/install-sdk.sh
 
