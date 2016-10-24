@@ -1,6 +1,6 @@
 FROM ndslabs/cloud9-base:latest
 
-ARG version=7
+ARG version=8
 
 # Install some common dependencies
 RUN apt-get -qq update && \
