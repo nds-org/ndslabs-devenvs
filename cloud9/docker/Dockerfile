@@ -11,8 +11,10 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/* /tmp/*
 
 ENV DOCKER_BUCKET get.docker.com
-ENV DOCKER_VERSION 1.10.3
+ENV DOCKER_VERSION 1.12.6
 ENV DIND_COMMIT 3b5fac462d21ca164b3778647420016315289034
+
+
 
 RUN set -x \
     && cd / \
