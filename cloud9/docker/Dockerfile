@@ -30,7 +30,7 @@ RUN set -x \
 
 RUN set -x \
     && addgroup --system dockremap \
-    && adduser --system --group dockremap dockremap \
+    && adduser --system --ingroup dockremap dockremap \
     && echo 'dockremap:165536:65536' >> /etc/subuid \
     && echo 'dockremap:165536:65536' >> /etc/subgid
 
