@@ -1,16 +1,19 @@
 FROM ndslabs/cloud9-base:latest
 
 USER root
-RUN apk add --no-cache \
+RUN apt-get -qq update && \
+    apt-get -qq install \
         ca-certificates \
         curl \
         openssl \
-        btrfs-progs \
+#        btrfs-progs \
         e2fsprogs \
-        e2fsprogs-extra \
+#        e2fsprogs-extra \
         iptables \
-        xfsprogs \
-        xz
+#        xz \
+        xfsprogs && \
+    apt-get -y clean all && \
+    rm -rf /var/lib/apt/lists/* /tmp/*
 
 ENV DOCKER_BUCKET get.docker.com
 ENV DOCKER_VERSION 1.12.6
@@ -26,8 +29,8 @@ RUN set -x \
     && docker -v
 
 RUN set -x \
-    && addgroup -S dockremap \
-    && adduser -S -G dockremap dockremap \
+    && addgroup --system dockremap \
+    && adduser --system --group dockremap dockremap \
     && echo 'dockremap:165536:65536' >> /etc/subuid \
     && echo 'dockremap:165536:65536' >> /etc/subgid
 
