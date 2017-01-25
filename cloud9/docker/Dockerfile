@@ -5,6 +5,7 @@ RUN apt-get -qq update && \
     apt-get -qq install \
         ca-certificates \
         curl \
+        wget \
         openssl \
 #        btrfs-progs \
         e2fsprogs \
