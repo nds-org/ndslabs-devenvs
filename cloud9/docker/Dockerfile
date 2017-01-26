@@ -30,10 +30,11 @@ RUN set -x \
     && docker -v
 
 RUN set -x \
-    && addgroup --system dockremap \
-    && adduser --system --ingroup dockremap dockremap \
-    && echo 'dockremap:165536:65536' >> /etc/subuid \
-    && echo 'dockremap:165536:65536' >> /etc/subgid
+    && addgroup dockremap \
+    && adduser --ingroup dockremap dockremap \
+    && sh -c 'echo dockremap:500000:65536 > /etc/subuid' \
+    && sh -c 'echo dockremap:500000:65536 > /etc/subgid' \
+    && sh -c 'sed -i -e "s#^\/usr\/local\/bin\/docker daemon#\/usr\/local\/bin\/docker daemon --userns-remap=default#" /etc/init.d/docker
 
 ENV DIND_COMMIT 3b5fac462d21ca164b3778647420016315289034
 
