@@ -25,4 +25,4 @@ VOLUME /workspace
 
 EXPOSE 80
 
-CMD ["nodejs", "/cloud9/server.js", "-p", "80", "-w", "/workspace"]
+CMD ["nodejs", "/cloud9/server.js", "-p", "80", "-w", "/workspace", "-a", ":", "--listen", "0.0.0.0" ]
