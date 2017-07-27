@@ -4,7 +4,6 @@ ARG ruby_version=2.4.1
 ARG rails_version=5.1.2
 
 # Install dependencies
-ADD ./files/etc/gemrc /etc/gemrc
 RUN apt-get -qq update && \
     apt-get -qq install \
       gawk \
@@ -32,7 +31,3 @@ RUN bash -l -c "ls -al /root/ && echo $PATH && rvm -v && \
     gem -v && \
     gem environment && \
     rails -v"
-
-RUN bash -l -c "rails new /root/workspace"
-
-ADD ./files/check-environment /.check-environment/ruby
