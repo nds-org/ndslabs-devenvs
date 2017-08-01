@@ -117,7 +117,8 @@ RUN pecl config-set php_ini /etc/php5/apache2/php.ini && \
 
 
 #GO
-ARG version=1.6
+
+ARG go_version=1.6
 
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
@@ -129,7 +130,7 @@ RUN apt-get update && \
     apt-get -y clean all && \
     rm -rf /var/lib/apt/lists/* /tmp/*
 
-RUN curl -fsSL "https://golang.org/dl/go${version}.linux-amd64.tar.gz" -o /tmp/golang.tar.gz && \
+RUN curl -fsSL "https://golang.org/dl/go${go_version}.linux-amd64.tar.gz" -o /tmp/golang.tar.gz && \
     mkdir -p /usr/local/go/${version} && \
     tar -C /usr/local/go/${version} --strip-components=1 -xzf /tmp/golang.tar.gz && \
     rm /tmp/golang.tar.gz && \
