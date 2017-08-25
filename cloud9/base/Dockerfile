@@ -6,11 +6,17 @@ RUN apt-get -qq update && \
 	curl \
         ca-certificates \
 	git \
+	sudo \
 	lsof \
-	nodejs \
 	python \
 	vim && \
-    apt-get -y clean all && \
+    curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash - && \
+    apt-get -qq update && \
+    apt-get -qq install --no-install-recommends \
+        nodejs && \
+    apt-get -qq clean all && \
+    apt-get -qq autoclean && \
+    apt-get -qq autoremove && \
     rm -rf /var/lib/apt/lists/* /tmp/*
 
 RUN git clone --depth 1 --single-branch https://github.com/c9/core.git /cloud9
