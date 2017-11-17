@@ -1,4 +1,4 @@
-FROM ubuntu:wily
+FROM ubuntu:xenial
 
 RUN apt-get -qq update && \
     apt-get -qq install --no-install-recommends \
