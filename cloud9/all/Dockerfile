@@ -1,6 +1,5 @@
 FROM ndslabs/cloud9-base:latest
 
-ARG version=8
 
 # Install some common dependencies
 RUN apt-get -qq update && \
@@ -15,17 +14,18 @@ RUN apt-get -qq update && \
     rm -rf /var/lib/apt/lists/* /tmp/*
 
 
-RUN apt-get -qq update && \
-    apt-get -qq install --no-install-recommends \
-      npm && \
-    ln -s /usr/bin/nodejs /usr/bin/node && \
+RUN curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash - && \
+    sudo apt-get install -y nodejs && \
+    ln -sf /usr/bin/nodejs /usr/bin/node && \
     apt-get -y clean all && \
     rm -rf /var/lib/apt/lists/* /tmp/*
+
+ARG java_version=8
 
 # Then install the JDK
 RUN apt-get -qq update && \
     apt-get -qq install \
-      openjdk-${version}-jdk && \
+      openjdk-${java_version}-jdk && \
     apt-get -y clean all && \
     rm -rf /var/lib/apt/lists/* /tmp/*
 
