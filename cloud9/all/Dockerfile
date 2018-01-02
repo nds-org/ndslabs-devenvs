@@ -16,7 +16,6 @@ RUN apt-get -qq update && \
 
 RUN curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash - && \
     sudo apt-get install -y nodejs && \
-    ln -sf /usr/bin/nodejs /usr/bin/node && \
     apt-get -y clean all && \
     rm -rf /var/lib/apt/lists/* /tmp/*
 
@@ -54,7 +53,8 @@ RUN apt-get -qq update && \
     rm -rf /var/lib/apt/lists/*
 
 # Install RVM
-RUN bash -l -c "curl -sSL https://get.rvm.io | sudo bash -s stable --autolibs=enabled"
+RUN curl -sSL https://rvm.io/mpapis.asc | sudo gpg --import - && \
+    bash -l -c "curl -sSL https://get.rvm.io | sudo bash -s stable --autolibs=enabled"
 
 # Install Rails
 RUN bash -l -c "rvm install ruby-${ruby_version} && \
@@ -76,8 +76,7 @@ RUN apt-get -qq update && \
       g++ \
       gdb \
       gdbserver \
-      build-essential \
-      vim && \
+      build-essential && \
     apt-get -y clean all && \
     rm -rf /var/lib/apt/lists/* /tmp/*
 
@@ -89,6 +88,7 @@ RUN apt-get -qq update && \
       python-pip \
       python3-pip \
       vim && \
+    pip install --upgrade pip && \
     pip install virtualenv  && \
     apt-get -y clean all && \
     rm -rf /var/lib/apt/lists/* /tmp/*
@@ -98,23 +98,12 @@ RUN apt-get -qq update && \
 #PHP
 WORKDIR /workspace
 RUN apt-get -qq update && \
-    apt-get -qq install \
-      npm \
-      php5 \
-      php5-dev \
-      php-pear \
-      tmux \
-      vim && \
+    apt-get -qq --no-install-recommends install \
+      php \
+      php-fpm && \
     apt-get -y clean all && \
     rm -rf /var/lib/apt/lists/* /tmp/*
-      
-RUN pecl config-set php_ini /etc/php5/apache2/php.ini && \
-    pecl install xdebug && \
-    echo "zend_extension=\"/usr/lib/php5/20131226/xdebug.so\"" > /etc/php5/mods-available/xdebug.ini && \
-    php5enmod xdebug
-
-
-
+ 
 
 #GO
 
@@ -155,4 +144,6 @@ RUN mkdir -p /root/.vim/colors && \
     git clone https://github.com/VundleVim/Vundle.vim.git /root/.vim/bundle/Vundle.vim && \
     rm -rf /root/.vim/bundle/Vundle.vim/.git /tmp/vim-solarized/.git
 
-RUN vim  +PluginInstall +qall 
+# NOTE: no tty here, so we pipe to /dev/null
+# The "echo" pipes are just there to send a newline in case the process prompts for input
+RUN bash -c "echo | echo | vim +PluginInstall +qall &>/dev/null"
