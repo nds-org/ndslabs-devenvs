@@ -8,9 +8,9 @@ RUN apt-get -qq update && \
 	git \
 	sudo \
 	lsof \
-	python \
+        python \
 	vim && \
-    curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash - && \
+    curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash - && \
     apt-get -qq update && \
     apt-get -qq install --no-install-recommends \
         nodejs && \
